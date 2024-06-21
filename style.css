@@ -1,0 +1,25 @@
+body{
+  overscroll-behavior: none;
+  overflow:hidden;
+}
+.connected{
+  border-color: #1FE232;
+}
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb{
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 48px; /* Set a specific slider handle width */
+  height: 32px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}

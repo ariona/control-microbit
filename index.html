@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.js" defer></script>
+  <script src="script.js"></script>
+  <script src="store.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body oncontextmenu="return false;">
+
+  <div class="min-h-screen flex flex-col bg-slate-100" x-data="data">
+    <div class="flex border-b py-2 shadow-sm bg-white">
+      <div class="pl-4 flex">
+        <button id="connect" onclick="toggleFullScreen()" class="rounded-xl leading-none tracking-tighter px-4 text-[24px] border-2 shadow-sm active:bg-slate-100">🖥️</button>
+      </div>
+      <div class="flex-1 flex justify-center">
+        <div class="bg-slate-100 rounded-xl p-1 flex gap-2">
+          <button
+            @click="mode = 'controller'"
+            x-bind:class="mode == 'controller' ? 'bg-white shadow-md' : ''"
+            class="rounded-xl py-1 leading-none tracking-tighter px-8 text-[24px]">🎮</button>
+          <button
+            @click="mode = 'juzamma'"
+            x-bind:class="mode == 'juzamma' ? 'bg-white shadow-md' : ''"
+            class="rounded-xl py-1 leading-none tracking-tighter px-8 text-[24px]">📖</button>
+          <button
+            @click="mode = 'hewan'"
+            x-bind:class="mode == 'hewan' ? 'bg-white shadow-md' : ''"
+            class="rounded-xl py-1 leading-none tracking-tighter px-8 text-[24px]">🐄</button>
+          <button
+            @click="mode = 'kendaraan'"
+            x-bind:class="mode == 'kendaraan' ? 'bg-white shadow-md' : ''"
+            class="rounded-xl py-1 leading-none tracking-tighter px-8 text-[24px]">🚕</button>
+        </div>
+      </div>
+      <div class="pr-4 flex">
+        <button id="connect" onclick="connectButtonPressed()" class="rounded-xl leading-none tracking-tighter px-4 text-[24px] border-2 shadow-sm active:bg-slate-100">🤖</button>
+      </div>
+    </div>
+    <div class="flex-1 flex justify-between items-center relative gap-8 pl-8">
+      <div class="dpad w-[300px] aspect-square flex flex-col gap-2">
+        <div class="flex justify-center flex-1">
+          <button id="up" ontouchstart="sendUART('up')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+        </div>
+        <div class="flex gap-2 h-[65px]">
+          <button id="left" ontouchstart="sendUART('left')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
+          <button id="horn" ontouchstart="sendUART('horn')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+          <button id="right" ontouchstart="sendUART('right')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
+        </div>
+        <div class="flex justify-center flex-1">
+          <button id="down" ontouchstart="sendUART('down')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+        </div>
+      </div>
+
+      <div class="flex flex-col flex-1 gap-8 pr-8 pl-12" x-show="mode == 'controller'">
+        <div class="slider-control flex items-center">
+          <input type="range" min="0" max="180" x-bind:value="slider1" @input="slider1 = $event.target.value; sendUART(`s1${$event.target.value}`)" class="slider shadow-sm w-full appearance-none bg-white rounded-full border"/>
+          <div class="w-[60px] text-center font-bold" x-text="slider1"></div>
+        </div>
+        <div class="slider-control flex items-center">
+          <input type="range" min="0" max="180" x-bind:value="slider2" @input="slider2 = $event.target.value; sendUART(`s2${$event.target.value}`)" class="slider shadow-sm w-full appearance-none bg-white rounded-full border"/>
+          <div class="w-[60px] text-center font-bold" x-text="slider2"></div>
+        </div>
+
+        <div class="flex gap-2">
+          <button @touchstart="sendUART('t1')" class="active:bg-slate-100 bg-white shadow-sm rounded-xl font-bold w-1/4 aspect-square py-2 px-4 border shadow-sm tracking-tighter text-[24px]">1</button>
+          <button @touchstart="sendUART('t2')" class="active:bg-slate-100 bg-white shadow-sm rounded-xl font-bold w-1/4 aspect-square py-2 px-4 border shadow-sm tracking-tighter text-[24px]">2</button>
+          <button @touchstart="sendUART('t3')" class="active:bg-slate-100 bg-white shadow-sm rounded-xl font-bold w-1/4 aspect-square py-2 px-4 border shadow-sm tracking-tighter text-[24px]">3</button>
+          <button @touchstart="sendUART('t4')" class="active:bg-slate-100 bg-white shadow-sm rounded-xl font-bold w-1/4 aspect-square py-2 px-4 border shadow-sm tracking-tighter text-[24px]">4</button>
+        </div>
+      </div>
+
+      <div class="relative flex-1 self-stretch" x-show="mode == 'juzamma'">
+        <div class="absolute inset-0 overflow-auto grid grid-cols-2 gap-2 p-4">
+          <template x-for="surat in juzamma">
+            <button @touchstart="sendUART(`q${surat.id}`)" class="bg-white active:bg-slate-100 aspect-[2] rounded-xl border shadow-md flex justify-center items-center text-center">
+              <h2 class="font-[500] tracking-tighter" x-text="surat.id + ' - ' + surat.label"></h2>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <div class="relative flex-1 self-stretch" x-show="mode == 'hewan'">
+        <div class="absolute inset-0 overflow-auto grid grid-cols-2 gap-2 p-4">
+          <template x-for="item in animals">
+            <button @touchstart="sendUART(`q${item.id}`)" class="bg-white active:bg-slate-100 aspect-[2] rounded-xl border shadow-md flex flex-col justify-center items-center text-center">
+              <div class="text-[48px] leading-none" x-text="item.icon"></div>
+              <h2 class="font-[500] tracking-tighter" x-text="item.id + ' - ' + item.label"></h2>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <div class="relative flex-1 self-stretch" x-show="mode == 'kendaraan'">
+        <div class="absolute inset-0 overflow-auto grid grid-cols-2 gap-2 p-4">
+          <template x-for="item in vehicles">
+            <button ontouchstart="sendUART(`v${item.id}`)" class="bg-white active:bg-slate-100 aspect-[2] rounded-xl border shadow-md flex flex-col justify-center items-center text-center">
+              <div class="text-[48px] leading-none" x-text="item.icon"></div>
+              <h2 class="font-[500] tracking-tighter" x-text="item.id + ' - ' + item.label"></h2>
+            </button>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    if("serviceWorker" in navigator){
+        navigator.serviceWorker.register("service_worker.js").then(registration=>{
+          console.log("SW Registered!");
+        }).catch(error=>{
+          console.log("SW Registration Failed");
+        });
+    }else{
+      console.log("Not supported");
+    }
+  </script>
+  </body>
+</html>
