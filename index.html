@@ -44,21 +44,23 @@
       </div>
     </div>
     <div class="flex-1 flex justify-between items-center relative gap-8 pl-8">
-      <div class="dpad w-[300px] aspect-square flex flex-col gap-2">
-        <div class="flex justify-center flex-1">
-          <button id="up" ontouchstart="sendUART('up')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
-        </div>
-        <div class="flex gap-2 h-[65px]">
-          <button id="left" ontouchstart="sendUART('left')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
-          <button id="horn" ontouchstart="sendUART('horn')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
-          <button id="right" ontouchstart="sendUART('right')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
-        </div>
-        <div class="flex justify-center flex-1">
-          <button id="down" ontouchstart="sendUART('down')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+      <div class="min-w-[300px]">
+        <div class="dpad aspect-square flex flex-col gap-2">
+          <div class="flex justify-center flex-1">
+            <button id="up" ontouchstart="sendUART('up')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+          </div>
+          <div class="flex gap-2 h-[65px]">
+            <button id="left" ontouchstart="sendUART('left')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
+            <button id="horn" ontouchstart="sendUART('horn')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+            <button id="right" ontouchstart="sendUART('right')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white flex-1"></button>
+          </div>
+          <div class="flex justify-center flex-1">
+            <button id="down" ontouchstart="sendUART('down')" ontouchend="sendUART('stop')" class="rounded-xl shadow-md border active:bg-slate-100 transition bg-white w-[75px]"></button>
+          </div>
         </div>
       </div>
 
-      <div class="flex flex-col flex-1 gap-8 pr-8 pl-12" x-show="mode == 'controller'">
+      <div class="flex-1 flex flex-col flex-1 gap-8 pr-8" x-show="mode == 'controller'">
         <div class="slider-control flex items-center">
           <input type="range" min="0" max="180" x-bind:value="slider1" @input="slider1 = $event.target.value; sendUART(`s1${$event.target.value}`)" class="slider shadow-sm w-full appearance-none bg-white rounded-full border"/>
           <div class="w-[60px] text-center font-bold" x-text="slider1"></div>
@@ -100,7 +102,7 @@
       <div class="relative flex-1 self-stretch" x-show="mode == 'kendaraan'">
         <div class="absolute inset-0 overflow-auto grid grid-cols-2 gap-2 p-4">
           <template x-for="item in vehicles">
-            <button ontouchstart="sendUART(`v${item.id}`)" class="bg-white active:bg-slate-100 aspect-[2] rounded-xl border shadow-md flex flex-col justify-center items-center text-center">
+            <button ontouchstart="sendUART(`q${item.id}`)" class="bg-white active:bg-slate-100 aspect-[2] rounded-xl border shadow-md flex flex-col justify-center items-center text-center">
               <div class="text-[48px] leading-none" x-text="item.icon"></div>
               <h2 class="font-[500] tracking-tighter" x-text="item.id + ' - ' + item.label"></h2>
             </button>
