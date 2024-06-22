@@ -1,0 +1,22 @@
+{
+  "name": "Control Micro:Bit", // installation name
+  "short_name": "Control Micro:Bit", // app title name
+  "start_url": ".",
+
+   "display": "standalone",
+   "orientation": "landscape",
+
+  "icons":[
+    {
+      "src":"favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src":"favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+
+}
